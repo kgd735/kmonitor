@@ -9,9 +9,15 @@
   //   npx wrangler secret put ADMIN_PASSWORD
   //   npx wrangler secret put PROXY_USER
   //   npx wrangler secret put PROXY_PASS
+  //   npx wrangler secret put FRP_AGENT_PASSWORD
   // 未设置 ADMIN_PASSWORD 时管理登录将直接拒绝（fail-closed）。
   "vars": {
-    "ADMIN_USERNAME": "admin"
+    "ADMIN_USERNAME": "admin",
+    "ADMIN_PASSWORD": "adminPassword",
+    "PROXY_USER": "proxy",
+    "PROXY_PASS": "proxyPassword",
+    "FRP_AGENT_TOKEN": "frp-agent-token"
+
   },
   "assets": {
     "directory": "static",
@@ -27,7 +33,7 @@
       // 如需绑定已有 D1，直接填其 ID；或在 Dashboard 的 Settings → Bindings 里改 DB 指向后重新部署。
       "binding": "DB",
       "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID",
-      "database_name": "kui-worker"
+      "database_name": "kmonitor"
     }
   ],
   "triggers": {
