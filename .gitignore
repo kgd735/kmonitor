@@ -2,3 +2,4 @@
 worker-configuration.d.ts
 realtime/node_modules/
 node_modules/
+config.ps1
