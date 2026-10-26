@@ -68,7 +68,7 @@ Cloudflare Worker（src/worker.js 单入口）
 > 换成你自己的 D1 ID（`npx wrangler d1 create kui-worker` 获取），再点部署按钮。
 > 直接用本仓库点按钮会因为占位符 ID 部署失败。
 
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/kuangdash/kui-worker)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/kgd735/kmonitor)
 
 1. 点击上方按钮，登录 Cloudflare 并确认 Worker 名称；
 2. 部署时确认 D1 绑定 `DB` 与两个 Durable Objects 绑定（`VPS_PRESENCE`、
