@@ -1,0 +1,52 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kui-worker",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-07-15",
+  "workers_dev": false,
+  // 安全说明：不要在这里填写任何密码或密钥。
+  // 部署后通过以下命令设置（Cloudflare 会加密存储，不会进 git）：
+  //   npx wrangler secret put ADMIN_PASSWORD
+  //   npx wrangler secret put PROXY_USER
+  //   npx wrangler secret put PROXY_PASS
+  // 未设置 ADMIN_PASSWORD 时管理登录将直接拒绝（fail-closed）。
+  "vars": {
+    "ADMIN_USERNAME": "admin"
+  },
+  "assets": {
+    "directory": "static",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api", "/api/*", "/health", "/agent/ws", "/dashboard/*", "/public/*", "/notify", "/public-policy", "/frequency-policy"]
+  },
+  "d1_databases": [
+    {
+      // 部署前必须填 database_id（不要提交别人的真实 ID）。
+      // 一次性步骤（已 npx wrangler login 的前提下）：
+      //   npx wrangler d1 create kui-worker
+      // 把返回的 database_id 填到下面，然后再 npx wrangler deploy。
+      // 如需绑定已有 D1，直接填其 ID；或在 Dashboard 的 Settings → Bindings 里改 DB 指向后重新部署。
+      "binding": "DB",
+      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID",
+      "database_name": "kui-worker"
+    }
+  ],
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
+  "durable_objects": {
+    "bindings": [
+      { "name": "VPS_PRESENCE", "class_name": "VpsPresence" },
+      { "name": "DASHBOARD_HUB", "class_name": "DashboardHub" }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["VpsPresence", "DashboardHub"]
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.1
+  }
+}
